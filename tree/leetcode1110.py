@@ -34,13 +34,13 @@ def build_bt(values):
 
     return root
 
-def preorder(current, to_delete, forest):
+def postorder(current, to_delete, forest):
     if current is None:
         return None
 
     # Recursively traverse the tree in postorder traversal (children processed first)
-    current.left = preorder(current.left, to_delete, forest)
-    current.right = preorder(current.right, to_delete, forest)
+    current.left = postorder(current.left, to_delete, forest)
+    current.right = postorder(current.right, to_delete, forest)
 
     # If the current node is not in the to_delete set,
     # it means it should not be deleted, so we return the current node (with its subtree unchanged).
@@ -65,7 +65,7 @@ class Solution:
     def delNodes(self, root: Optional[TreeNode], to_delete: List[int]) -> List[TreeNode]:
         to_delete = set(to_delete)  # Convert list to set for O(1) average-time lookups
         forest = []
-        root = preorder(root, to_delete, forest)
+        root = postorder(root, to_delete, forest)
 
         # If the root itself was not deleted, add it to the forest
         if root:
