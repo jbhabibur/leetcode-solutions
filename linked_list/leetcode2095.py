@@ -10,20 +10,18 @@ Description:
     If the list has only one node, return None after deletion
 
 Brute Force Approach (Two-Pass):
+    1. Traverse the entire linked list to count the total number of nodes (n)
+    2. If n == 1, return None (since the list will be empty after deletion)
+    3. Compute the middle index as n // 2
+    4. Traverse the list again to reach the node just before the middle node
+    5. Modify the 'next' pointer of the previous node to skip the middle node
+    6. Return the modified list head
 
-    Steps:
-        1. Traverse the entire linked list to count the total number of nodes (n)
-        2. If n == 1, return None (since the list will be empty after deletion)
-        3. Compute the middle index as n // 2
-        4. Traverse the list again to reach the node just before the middle node
-        5. Modify the 'next' pointer of the previous node to skip the middle node
-        6. Return the modified list head
+Time Complexity:
+    O(n * n) — Two passes through the list: one to count nodes, one to delete the middle node
 
-    Time Complexity:
-        O(n * n) — Two passes through the list: one to count nodes, one to delete the middle node
-
-    Space Complexity:
-        O(1) — Only a few pointers and counters are used.
+Space Complexity:
+    O(1) — Only a few pointers and counters are used.
 """
 
 from typing import Optional
