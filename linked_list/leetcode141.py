@@ -3,29 +3,24 @@ LeetCode Problem: 141. Linked List Cycle
 URL             : https://leetcode.com/problems/linked-list-cycle/
 
 Description:
-    Given head of a singly linked list, determine if the linked list has a cycle in it.
-    A cycle occurs if a node can be visited again by continuously following the next pointer.
-    The list can have duplicate values, so we must rely on node references (not values).
+    Given head of a singly linked list, determine if the linked list has a cycle in it
+    A cycle occurs if a node can be visited again by continuously following the next pointer
+    The list can have duplicate values, so we must rely on node references (not values)
 
-Approach (Using Hash Set):
-    1. Traverse the linked list node by node.
-    2. Maintain a set to store references to nodes we’ve already visited.
+Brute Force Approach (Using Hash Set):
+    1. Traverse the linked list node by node
+    2. Maintain a set to store references to nodes we’ve already visited
     3. At each step:
-        - If the current node is already in the set, a cycle exists → return True.
-        - Otherwise, add the node to the set and move forward.
-    4. If we reach the end (null), then there is no cycle.
+        - If the current node is already in the set, a cycle exists → return True
+        - Otherwise, add the node to the set and move forward
+    4. If we reach the end (null), then there is no cycle
 
 Why this works:
-    - Node values can be duplicated, but node *references* (object identities) are unique.
-    - Sets in Python compare object identity, not value, making them perfect for this task.
+    - Node values can be duplicated, but node *references* (object identities) are unique
+    - Sets in Python compare object identity, not value, making them perfect for this task
 
-Time Complexity:
-    O(n) — In the worst case, we visit each node once.
-
-Space Complexity:
-    O(n) — We store up to n node references in the visited set.
-
-Language: Python
+Time Complexity:  O(n)
+Space Complexity: O(n)
 """
 
 from typing import Optional
@@ -94,19 +89,12 @@ head = build_list(head, pos)  # Builds linked list with cycle at position 1
 sol = Solution()
 print(sol.hasCycle(head))     # Output: True, since there is a cycle
 
+
 # ------------------------------ Optimization Approach ------------------------------ #
 
+
 """
-LeetCode Problem: 141. Linked List Cycle  
-URL             : https://leetcode.com/problems/linked-list-cycle/
-
-Description:
-    Given the head of a singly linked list, determine if the linked list contains a cycle.
-    A cycle occurs if a node can be reached again by continuously following the next pointer.
-    Note that the linked list may contain duplicate values, so detection must be based on node
-    references (not values).
-
-Approach (Floyd’s Cycle Detection - Tortoise and Hare Algorithm):
+Optimized Approach (Floyd’s Cycle Detection - Tortoise and Hare Algorithm):
     1. Use two pointers, slow and fast.
        - Slow moves one step at a time.
        - Fast moves two steps at a time.
@@ -117,16 +105,8 @@ Why this works:
     - In a cyclic list, the fast pointer "laps" the slow pointer and they will meet.
     - This method uses constant space, making it optimal for cycle detection.
 
-Time Complexity:
-    O(n) — In the worst case, each node is visited at most once.
-
-Space Complexity:
-    O(1) — Uses only two pointers regardless of list size.
-
-Alternative Approach (using Hash Set - not used here):
-    - Store visited node references in a set.
-    - If a node is revisited, a cycle exists.
-    - Uses O(n) space.
+Time Complexity:  O(n)
+Space Complexity: O(1)
 """
 
 class Solution:
