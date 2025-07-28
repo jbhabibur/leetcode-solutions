@@ -67,25 +67,28 @@ def display(head):
 
 class Solution:
     def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        # Base Case 1: If the list is empty, there is nothing to swap
+        # Base case: if list is empty, return None
         if head is None:
             return None
 
-        # Base Case 2: If there is only one node, no swap needed
+        # Base case: if only one node, no need to swap
         if head.next is None:
             return head
 
-        # Step 1: Identify the first and second nodes to be swapped
+        # Identify the first and second nodes in the pair
         first = head
         second = head.next
 
-        # Step 2: Recursively call swapPairs on the rest of the list starting from the node after the second
-        first.next = self.swapPairs(second.next)
+        # Re-link first to the node after second (i.e., third node)
+        first.next = second.next
 
-        # Step 3: Swap the first and second nodes
+        # Link second to first (swapping them)
         second.next = first
 
-        # Step 4: Return the new head of this pair (which is second after swapping)
+        # Recurse on the rest of the list starting from the node after the current pair
+        head.next = self.swapPairs(first.next)
+
+        # Return the new head (which is second after swap)
         return second
 
 # Example usage
