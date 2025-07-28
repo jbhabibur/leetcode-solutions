@@ -7,7 +7,7 @@ Description:
     You must solve the problem without modifying the values in the list's nodes
     (i.e., only nodes themselves may be changed.)
 
-Approach:
+Approach (using recursion):
     1. Use recursion to swap every pair of adjacent nodes.
     2. Base case: If the list has 0 or 1 node, return the head.
     3. Recursive case:
@@ -99,3 +99,48 @@ print(display(head))
 sol = Solution()
 head = sol.swapPairs(head)
 print(display(head))
+
+
+# ------------------------------ Optimization Approach ------------------------------ #
+
+
+"""
+Approach (using iteration with constant space):
+    1. Use iteration with a dummy node to simplify edge cases.
+    2. Traverse the list while there are at least two nodes ahead.
+    3. Swap the two adjacent nodes by adjusting the 'next' pointers.
+    4. Move the pointer forward by two nodes to process the next pair.
+
+Time Complexity:
+    O(n) — Each node is visited once.
+
+Space Complexity:
+    O(1) — Constant space used, no recursion.
+
+"""
+
+class Solution:
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(-1)
+        dummy.next = head
+
+        # Pointer to track the current node before the pair to be swapped
+        current = dummy
+
+        # Traverse the list while there are at least two nodes ahead to swap
+        while current.next and current.next.next:
+            # Identify the two nodes to swap
+            first = current.next
+            second = current.next.next
+
+            # Swap the nodes by re-pointing their next references
+            first.next = second.next
+            second.next = first
+
+            current.next = second     # Current now points to second (the new front of the pair)
+
+            # Move the current pointer forward by two nodes to process the next pair
+            current = first
+
+        # Return the new head of the list
+        return dummy.next
