@@ -62,3 +62,38 @@ class Solution:
             self.memo[n] = self.fib(n - 1) + self.fib(n - 2)
 
         return self.memo[n]
+
+
+# ------------------------------ Optimization Approach ------------------------------ #
+
+"""
+Approach: Dynamic Programming (Tabulation)
+
+Description:
+    Iterative bottom-up approach to compute the nth Fibonacci number.
+    Builds up the solution from the base cases by storing intermediate results in a dp array.
+
+Tabulation Logic:
+    - Initialize dp[0] = 0 and dp[1] = 1 (base cases).
+    - Iteratively compute dp[i] = dp[i-1] + dp[i-2] for i from 2 to n.
+    - Return dp[n] as the final result.
+
+Time Complexity : O(n)  — each subproblem is solved once in a loop
+Space Complexity: O(n)  — for the dp array
+"""
+
+class Solution:
+    def fib(self, n: int) -> int:
+        if n == 0:
+            return 0
+        if n == 1:
+            return 1
+
+        dp = [-1] * (n + 1)
+        dp[0] = 0
+        dp[1] = 1
+
+        for i in range(2, n + 1):
+            dp[i] = dp[i - 1] + dp[i - 2]
+
+        return dp[n]
