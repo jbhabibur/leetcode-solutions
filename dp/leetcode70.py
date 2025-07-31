@@ -2,10 +2,12 @@
 LeetCode Problem: 70. Climbing Stairs
 URL             : https://leetcode.com/problems/climbing-stairs/
 
-There is a staircase with `n` steps.
-You can either take 1 step or 2 steps at a time.
-Determine how many distinct ways you can reach the top.
+Problem:
+    There is a staircase with `n` steps.
+    You can either take 1 step or 2 steps at a time.
+    Determine how many distinct ways you can reach the top.
 """
+
 
 # ------------------------------ 1. Recursive (Naive) ------------------------------ #
 """
@@ -50,14 +52,18 @@ sol = Solution()
 print(sol.climbStairs(n))
 
 
-# ------------------------------ Optimization Approach ------------------------------ #
+# ------------------------------ 2. Recursive + Memoization ------------------------------ #
 """
 Approach: Recursive with Memoization (Top-down Dynamic Programming)
 
 Optimization:
     - Use a dictionary to cache results for each subproblem
     - Avoid redundant computations
-    - Converts exponential to linear time
+    - Converts exponential time to linear time
+
+Base Cases:
+    - If n == 0: 1 way (do nothing)
+    - If n < 0 : 0 ways (invalid)
 
 Time Complexity : O(n) — each unique subproblem solved once
 Space Complexity: O(n) — recursion stack + memoization dictionary
@@ -78,14 +84,22 @@ class Solution:
 
         return self.memo[n]
 
-# ------------------------------ Optimization Approach ------------------------------ #
+# ------------------------------ 3. Bottom-Up DP (Tabulation) ------------------------------ #
 """
 Approach: Bottom-Up Dynamic Programming (Tabulation)
 
 Explanation:
-    - Initialize dp[1] = 1, dp[2] = 2 (base cases)
+    - Initialize dp[1] = 1, dp[2] = 2 as base cases
     - Iteratively build up dp[i] = dp[i-1] + dp[i-2]
-    - This avoids recursion entirely and runs in linear time
+    - Avoids recursion, runs in linear time
+
+Base Cases:
+    - If n == 0: 0 ways (interpreted here as no steps to climb)
+    - If n == 1: 1 way
+    - If n == 2: 2 ways (1+1 or 2)
+
+Note:
+    This differs from the recursive approaches where n == 0 is considered 1 way (doing nothing).
 
 Time Complexity : O(n)
 Space Complexity: O(n)
@@ -109,3 +123,49 @@ class Solution:
             dp[i] = dp[i - 1] + dp[i - 2]
 
         return dp[n]
+
+# ------------------------------ 4. Bottom-Up DP (Space Optimized) ------------------------------ #
+"""
+Approach: Bottom-Up Dynamic Programming (Tabulation with Space Optimization)
+
+Explanation:
+    - Track only the last two computed values instead of full dp array
+      (prev2 = dp[i - 2], prev1 = dp[i - 1])
+    - For each step i from 3 to n:
+        curr = prev1 + prev2
+    - Update prev2 and prev1 accordingly
+
+    This reduces space complexity from O(n) to O(1).
+
+Base Cases:
+    - If n == 0: 0 ways (interpreted here as no steps to climb)
+    - If n == 1: 1 way
+    - If n == 2: 2 ways (1+1 or 2)
+
+Note:
+    This differs from the recursive approaches where n == 0 is considered 1 way (doing nothing).
+
+Time Complexity : O(n) — one loop from 3 to n
+Space Complexity: O(1) — only three variables used
+"""
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n == 0:
+            return 0
+        if n == 1:
+            return 1
+        if n == 2:
+            return 2
+
+
+        prev2 = 1
+        prev1 = 2
+
+        for i in range(3, n + 1):
+            curr_i = prev1 + prev2
+
+            prev2 = prev1
+            prev1 = curr_i
+
+        return curr_i
