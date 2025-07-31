@@ -40,3 +40,34 @@ class Solution:
 n = 3
 sol = Solution()
 print(sol.climbStairs(n))
+
+
+# ------------------------------ Optimization Approach ------------------------------ #
+
+
+"""
+Approach: Recursive with Memoization (Top-down DP)
+
+Optimization (Memoization):
+    - Store the result for each n in a dictionary (self.memo)
+    - Avoid recomputing the same subproblem repeatedly
+    - Greatly improves performance from exponential to linear time
+
+Time Complexity : O(n)   — Each subproblem is solved once
+Space Complexity: O(n)   — For memoization dictionary and recursion stack
+"""
+
+class Solution:
+    def __init__(self):
+        self.memo = {}
+
+    def climbStairs(self, n: int) -> int:
+        if n == 0:
+            return 1
+        if n == -1:
+            return 0
+
+        if n not in self.memo:
+            self.memo[n] = self.climbStairs(n - 1) + self.climbStairs(n - 2)
+
+        return self.memo[n]
