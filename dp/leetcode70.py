@@ -2,21 +2,29 @@
 LeetCode Problem: 70. Climbing Stairs
 URL             : https://leetcode.com/problems/climbing-stairs/
 
+There is a staircase with `n` steps.
+You can either take 1 step or 2 steps at a time.
+Determine how many distinct ways you can reach the top.
+"""
+
+# ------------------------------ 1. Recursive (Naive) ------------------------------ #
+"""
 Approach: Recursive (Naive)
 
-Description:
-    You are climbing a staircase. It takes n steps to reach the top.
-    Each time you can either climb 1 or 2 steps.
-    Return the number of distinct ways to climb to the top.
+Explanation:
+    At each step, you have two choices:
+    - Take 1 step → solve for (n - 1)
+    - Take 2 steps → solve for (n - 2)
 
-Recursive Logic:
-    - If n == 0 → return 1 (1 valid way: do nothing)
-    - If n <  0 → return 0 (invalid path)
-    - Otherwise → climbStairs(n - 1) + climbStairs(n - 2)
-      (try taking 1 or 2 steps and sum all valid paths)
+    This forms the recurrence:
+        f(n) = f(n - 1) + f(n - 2)
 
-Time Complexity : O(2^n)  — exponential due to repeated subproblems
-Space Complexity: O(n)    — recursion call stack depth
+Base Cases:
+    - If n == 0: 1 way (do nothing)
+    - If n < 0 : 0 ways (invalid)
+
+Time Complexity : O(2^n) — exponential due to overlapping subproblems
+Space Complexity: O(n)   — maximum recursion depth
 """
 
 class Solution:
@@ -43,18 +51,16 @@ print(sol.climbStairs(n))
 
 
 # ------------------------------ Optimization Approach ------------------------------ #
-
-
 """
-Approach: Recursive with Memoization (Top-down DP)
+Approach: Recursive with Memoization (Top-down Dynamic Programming)
 
-Optimization (Memoization):
-    - Store the result for each n in a dictionary (self.memo)
-    - Avoid recomputing the same subproblem repeatedly
-    - Greatly improves performance from exponential to linear time
+Optimization:
+    - Use a dictionary to cache results for each subproblem
+    - Avoid redundant computations
+    - Converts exponential to linear time
 
-Time Complexity : O(n)   — Each subproblem is solved once
-Space Complexity: O(n)   — For memoization dictionary and recursion stack
+Time Complexity : O(n) — each unique subproblem solved once
+Space Complexity: O(n) — recursion stack + memoization dictionary
 """
 
 class Solution:
@@ -71,3 +77,35 @@ class Solution:
             self.memo[n] = self.climbStairs(n - 1) + self.climbStairs(n - 2)
 
         return self.memo[n]
+
+# ------------------------------ Optimization Approach ------------------------------ #
+"""
+Approach: Bottom-Up Dynamic Programming (Tabulation)
+
+Explanation:
+    - Initialize dp[1] = 1, dp[2] = 2 (base cases)
+    - Iteratively build up dp[i] = dp[i-1] + dp[i-2]
+    - This avoids recursion entirely and runs in linear time
+
+Time Complexity : O(n)
+Space Complexity: O(n)
+"""
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n == 0:
+            return 0
+        if n == 1:
+            return 1
+        if n == 2:
+            return 2
+
+
+        dp = [0] * (n + 1)
+        dp[1] = 1
+        dp[2] = 2
+
+        for i in range(3, n + 1):
+            dp[i] = dp[i - 1] + dp[i - 2]
+
+        return dp[n]
