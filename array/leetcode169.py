@@ -45,3 +45,30 @@ class Solution:
 nums = [3,2,3]
 sol = Solution()
 sol.majorityElement(nums)
+
+
+# ------------------------------ 2. Optimized (Sorting) ------------------------------ #
+"""
+Approach: Sorting
+
+Explanation:
+    - First, sort the array `nums` in non-decreasing order.
+    - Since the majority element appears more than n // 2 times,
+      it will always occupy the middle index after sorting.
+    - Simply return the element at index n // 2.
+
+    Sorting brings the majority element into the center of the array.
+
+Time Complexity : O(n log n) — due to sorting
+Space Complexity: O(1)       — in-place sort (ignoring sort space)
+"""
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        # Sorting performs O(n log n) times
+        nums.sort()
+
+        # The majority element will always occupy the middle index after sorting
+        middle_index = len(nums) // 2
+
+        return nums[middle_index]
