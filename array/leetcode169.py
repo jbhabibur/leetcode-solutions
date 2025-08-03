@@ -72,3 +72,39 @@ class Solution:
         middle_index = len(nums) // 2
 
         return nums[middle_index]
+
+
+# ------------------------------ 3. Optimized (Hash Map) ------------------------------ #
+"""
+Approach: Hash Map (Frequency Counting)
+
+Explanation:
+    - Use a hash map (dictionary) to count the frequency of each element in `nums`.
+    - Iterate through the array once and update counts in the hash map.
+    - After counting, iterate through the hash map to find the element
+      whose frequency is greater than n // 2 and return it.
+
+    This approach efficiently counts frequencies in a single pass and
+    then finds the majority element in linear time.
+
+Time Complexity : O(n) — single pass for counting + single pass for checking
+Space Complexity: O(n) — hash map stores frequency of elements
+"""
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        hash_map = {}
+
+        # Performs O(n) times
+        # Count the frequency of each number
+        for num in nums:
+            if num not in hash_map:
+                hash_map[num] = 1
+            else:
+                hash_map[num] += 1
+
+        # Performs O(n) times
+        # Return the number whose frequency is greater than n//2
+        for key, value in hash_map.items():
+            if value > len(nums) // 2:
+                return key
