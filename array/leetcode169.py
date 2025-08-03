@@ -108,3 +108,42 @@ class Solution:
         for key, value in hash_map.items():
             if value > len(nums) // 2:
                 return key
+
+
+# ------------------------------ 4. Optimized (Boyer-Moore Voting) ------------------------------ #
+"""
+Approach: Boyer-Moore Voting Algorithm
+
+Explanation:
+    - Initialize two variables: `majority` (candidate element) and `voting` (counter).
+    - Iterate through the array:
+        - When `voting` is 0, pick the current element as the new candidate.
+        - If the current element matches the candidate, increment `voting`.
+        - Otherwise, decrement `voting`.
+    - The candidate at the end is guaranteed to be the majority element.
+
+    This approach uses O(1) space and O(n) time.
+
+Time Complexity : O(n) — single pass through the array
+Space Complexity: O(1) — constant space usage
+"""
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        majority = 0 # Candidate
+        voting = 0
+
+        for num in nums:
+            # If voting count drops to zero, choose a new candidate
+            if voting == 0:
+                majority = num
+
+            # If current number matches candidate, increment voting count
+            if num == majority:
+                voting += 1
+            else:
+                # Otherwise, decrement voting count
+                voting -= 1
+
+        # At the end, 'majority' holds the majority element
+        return majority
