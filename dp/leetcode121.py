@@ -48,3 +48,32 @@ class Solution:
 prices = [7,6,4,3,1]
 sol = Solution()
 print(sol.maxProfit(prices))
+
+
+
+# ---------------------------- 2. Optimized One-Pass ---------------------------- #
+"""
+Approach: One-pass Dynamic Programming
+
+Explanation:
+    - Track the lowest price encountered so far (best_buy).
+    - For each price, calculate profit = current price - best_buy.
+    - Update max_profit if this profit is higher.
+    - Update best_buy if a new lower price is found.
+
+Time Complexity : O(n) — single traversal of the list  
+Space Complexity: O(1) — uses constant extra space
+"""
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        n = len(prices)
+        max_profit = 0
+        best_buy = prices[0]
+
+        for i in range(1, n):
+            if prices[i] > best_buy:
+                max_profit = max(max_profit, (prices[i] - best_buy))
+            best_buy = min(best_buy, prices[i])
+
+        return max_profit
