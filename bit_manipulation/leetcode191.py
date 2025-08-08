@@ -73,3 +73,28 @@ class Solution:
             if (n >> k) & 1 == 1:
                 count += 1
         return count
+
+# ------------------------------ Brian Kernighan's Algorithm ------------------------------ #
+"""
+        Approach: Brian Kernighan's Algorithm to Count Set Bits
+
+        Explanation:
+            - Brian Kernighan’s algorithm repeatedly flips the least-significant '1' bit to '0'
+              by doing `n = n & (n - 1)` until n becomes 0.
+            - Each iteration removes one set bit, so the loop runs as many times as there are set bits.
+            - Increment count each time a set bit is removed.
+            - This approach is efficient if the number of set bits is small.
+
+        Time Complexity : O(k), where k is the number of set bits in n
+        Space Complexity: O(1) — constant space usage
+        """
+
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        count = 0
+
+        while n != 0:
+            n = n & (n - 1)
+            count += 1
+
+        return count
