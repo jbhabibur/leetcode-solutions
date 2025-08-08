@@ -49,3 +49,27 @@ class Solution:
 n = 11
 sol = Solution()
 sol.hammingWeight(n)
+
+
+# ------------------------------ Bitwise Shift Approach ------------------------------ #
+"""
+Approach: Check Each Bit Using Bitwise Shift
+
+Explanation:
+    - Integers are stored in binary form.
+    - We can check each bit from most significant (left) to least significant (right)
+      using a bitwise right shift (>>).
+    - `(n >> k) & 1` isolates the k-th bit (0 or 1).
+    - Count how many bits are 1 in the 32-bit representation.
+
+Time Complexity : O(1) — fixed 32-bit loop (constant iterations)
+Space Complexity: O(1) — no extra space used
+"""
+
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        count = 0
+        for k in range(31, -1, -1):  # Check each of the 32 bits
+            if (n >> k) & 1 == 1:
+                count += 1
+        return count
